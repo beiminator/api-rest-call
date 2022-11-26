@@ -3,3 +3,4 @@
 .project
 .classpath
 .gitattributes
+/src/main/java/com/test/Constants.java
