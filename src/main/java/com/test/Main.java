@@ -5,7 +5,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublisher;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -17,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			Transcript transcript = new Transcript();
-			transcript.setAudio_url("https://github.com/beiminator/api-rest-call/blob/main/src/main/resources/media/Thirsty.mp4");
+			transcript.setAudio_url(Constants.AUDIO_URL);
 			Gson gson = new Gson();
 			String gsonRequest = gson.toJson(transcript);
 			
@@ -43,9 +42,9 @@ public class Main {
 				.GET()
 				.build();
 			while (true) {
+				System.out.println(transcript.getStatus());
 				httpResponse = httpClient.send(getRequest, BodyHandlers.ofString());
 				transcript = gson.fromJson(httpResponse.body(), Transcript.class);
-				System.out.println(transcript.getStatus());
 				if ("completed".equals(transcript.getStatus()) ||
 						"error".equals(transcript.getStatus())) {
 					break;
